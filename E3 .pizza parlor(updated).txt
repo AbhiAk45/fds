@@ -1,0 +1,110 @@
+#include <iostream>
+using namespace std;
+
+class pizzaparlor {
+    int front, rear, *q, maxsize;
+
+public:
+    pizzaparlor(int size) : front(-1), rear(-1), maxsize(size) {
+        q = new int[maxsize];  // allocate memory
+    }
+
+    ~pizzaparlor() {
+        delete[] q;  // free memory
+    }
+
+    bool isfull() {
+        return (front == 0 && rear == maxsize - 1) || (front == rear + 1);
+    }
+
+    bool isempty() {
+        return front == -1 && rear == -1;
+    }
+
+    void addorder() {
+        if (!isfull()) {
+            int id;
+            cout << "\nEnter pizza id: ";
+            cin >> id;
+
+            if (isempty()) {
+                front = rear = 0;
+            } else {
+                rear = (rear + 1) % maxsize;
+            }
+            q[rear] = id;
+
+            char choice;
+            cout << "Add another order? (y/n): ";
+            cin >> choice;
+            while (choice == 'y' || choice == 'Y') {
+                if (isfull()) {
+                    cout << "\nOrders full.";
+                    break;
+                }
+                cout << "\nEnter pizza id: ";
+                cin >> id;
+                rear = (rear + 1) % maxsize;
+                q[rear] = id;
+                cout << "Add another order? (y/n): ";
+                cin >> choice;
+            }
+        } else {
+            cout << "\nOrders full.";
+        }
+    }
+
+    void serveorder() {
+        if (!isempty()) {
+            cout << "\nServing order: " << q[front];
+            if (front == rear) {
+                front = rear = -1;  // queue empty
+            } else {
+                front = (front + 1) % maxsize;
+            }
+        } else {
+            cout << "\nNo orders.";
+        }
+    }
+
+    void displayorders() {
+        if (!isempty()) {
+            cout << "\nCurrent orders: ";
+            int i = front;
+            while (i != rear) {
+                cout << q[i] << " <- ";
+                i = (i + 1) % maxsize;
+            }
+            cout << q[rear];
+        } else {
+            cout << "\nNo orders.";
+        }
+    }
+
+    void menu() {
+        int choice;
+        do {
+            cout << "\n* * * * PIZZA PARLOUR * * * *";
+            cout << "\n1. Add Pizza\n2. Display Orders\n3. Serve Pizza\n4. Exit\nEnter choice: ";
+            cin >> choice;
+
+            switch (choice) {
+                case 1: addorder(); break;
+                case 2: displayorders(); break;
+                case 3: serveorder(); break;
+                case 4: cout << "Exiting program...\n"; break;
+                default: cout << "Invalid choice. Try again.\n";
+            }
+        } while (choice != 4);
+    }
+};
+
+int main() {
+    int m;
+    cout << "Enter max number of orders (M): ";
+    cin >> m;
+
+    pizzaparlor p1(m);
+    p1.menu();
+    return 0;
+}
