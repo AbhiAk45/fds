@@ -1,0 +1,20 @@
+fds_marks = []
+n = int(input("Enter number of students: "))
+for s1 in range(n):
+    while True:
+        marks = int(input("Enter marks for FDS in range [0-100] and -1 if absent for Roll no " + str(s1 + 1) + ": "))
+        if -1 <= marks <= 100:
+            fds_marks.append(marks)
+            break
+        else:
+            print("Invalid marks, retry. Range [0-100]")
+
+print(fds_marks)
+print(fds_marks.count(-1))
+
+print("Average:", sum(m for m in fds_marks if m != -1) / (n - fds_marks.count(-1)))
+print("Highest marks of student:", max(fds_marks))
+
+filtered_marks = [m for m in fds_marks if m != -1]
+print("Lowest marks of student:", min(filtered_marks))
+print("Absent students are:", fds_marks.count(-1))
