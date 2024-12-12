@@ -1,7 +1,4 @@
-
-
 import random
-
 
 def linear_search(arr, roll_number):
     for number in arr:
@@ -9,49 +6,27 @@ def linear_search(arr, roll_number):
             return True
     return False
 
-
-
 def sentinel_search(arr, roll_number):
-   
     last = arr[-1]
     arr[-1] = roll_number
-    
     i = 0
     while arr[i] != roll_number:
         i += 1
-    
-        arr[-1] = last
-    
+    arr[-1] = last
     return i < len(arr) or last == roll_number
 
-
-
 def generate_random_roll_numbers(n):
-    return random.sample(range(1000, 1000 + n), n)  # Unique roll numbers between 1000 and 1000 + n
-
+    return random.sample(range(1000, 1000 + n), n)
 
 def main():
-
-
-    n = 10  
+    n = 10
     roll_numbers = generate_random_roll_numbers(n)
     print("Roll numbers of students who attended the training program:", roll_numbers)
-
     roll_number_to_search = int(input("Enter the roll number to search: "))
-
-    
     found = linear_search(roll_numbers, roll_number_to_search)
     print(f"Linear Search: Roll number {roll_number_to_search} {'found' if found else 'not found'}")
-
-    
     found = sentinel_search(roll_numbers, roll_number_to_search)
     print(f"Sentinel Search: Roll number {roll_number_to_search} {'found' if found else 'not found'}")
 
-
-
 if __name__ == "__main__":
     main()
-
-
-
-
