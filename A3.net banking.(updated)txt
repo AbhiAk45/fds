@@ -1,0 +1,12 @@
+bal = 0
+while True:
+    t = input("Enter Transaction \nE-Exit\nD-Deposit Amt\nW-Withdraw Amt:\nTransaction: ")
+    if t[0] == 'E':
+        break
+    elif t[0] == 'D':
+        bal += int(t[1:])
+    elif t[0] == 'W' and bal >= int(t[1:]):
+        bal -= int(t[1:])
+    else:
+        print("Incorrect input or insufficient balance")
+    print("Current Balance:", bal)
