@@ -1,0 +1,61 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Stack {
+private:
+    string arr;
+
+public:
+    void push(char c) {
+        arr += c;  // Append to the string
+    }
+
+    void reverse() {
+        cout << "\nReversed string is: ";
+        for (int i = arr.length() - 1; i >= 0; i--) {
+            cout << arr[i];
+        }
+        cout << endl;
+    }
+
+    bool checkPalindrome(const string& original) {
+        return arr == string(arr.rbegin(), arr.rend());  // Check if the string is equal to its reverse
+    }
+};
+
+void preprocessString(const string& str, string& processed) {
+    for (char ch : str) {
+        if (isalnum(ch)) {
+            processed += tolower(ch);  // Add lowercase alphanumeric characters
+        }
+    }
+}
+
+int main() {
+    Stack stack;
+    string str, processed;
+
+    cout << "Enter string to check if it is a palindrome: ";
+    getline(cin, str);
+
+    preprocessString(str, processed);
+
+    // Push each character of the processed string onto the stack
+    for (char ch : processed) {
+        stack.push(ch);
+    }
+
+    // Check if the processed string is a palindrome
+    if (stack.checkPalindrome(processed)) {
+        cout << "\nString is a palindrome..." << endl;
+    } else {
+        cout << "\nString is not a palindrome..." << endl;
+    }
+
+    // Print the reversed string
+    stack.reverse();
+
+    return 0;
+}
