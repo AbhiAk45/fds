@@ -3,13 +3,13 @@
 
 using namespace std;
 
-class Stack {
+class stack {
 private:
     string arr;
 
 public:
     void push(char c) {
-        arr += c;  // Append to the string
+        arr += c;
     }
 
     void reverse() {
@@ -21,20 +21,20 @@ public:
     }
 
     bool checkPalindrome(const string& original) {
-        return arr == string(arr.rbegin(), arr.rend());  // Check if the string is equal to its reverse
+        return arr == string(arr.rbegin(), arr.rend());
     }
 };
 
 void preprocessString(const string& str, string& processed) {
     for (char ch : str) {
         if (isalnum(ch)) {
-            processed += tolower(ch);  // Add lowercase alphanumeric characters
+            processed += tolower(ch);
         }
     }
 }
 
 int main() {
-    Stack stack;
+    stack stk;
     string str, processed;
 
     cout << "Enter string to check if it is a palindrome: ";
@@ -42,20 +42,17 @@ int main() {
 
     preprocessString(str, processed);
 
-    // Push each character of the processed string onto the stack
     for (char ch : processed) {
-        stack.push(ch);
+        stk.push(ch);
     }
 
-    // Check if the processed string is a palindrome
-    if (stack.checkPalindrome(processed)) {
+    if (stk.checkPalindrome(processed)) {
         cout << "\nString is a palindrome..." << endl;
     } else {
         cout << "\nString is not a palindrome..." << endl;
     }
 
-    // Print the reversed string
-    stack.reverse();
+    stk.reverse();
 
     return 0;
 }
