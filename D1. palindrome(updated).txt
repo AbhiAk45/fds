@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cctype>
 
 using namespace std;
 
@@ -21,12 +22,19 @@ public:
     }
 
     bool checkPalindrome(const string& original) {
-        return arr == string(arr.rbegin(), arr.rend());
+        int n = arr.length();
+        for (int i = 0; i < n / 2; i++) {
+            if (arr[i] != arr[n - 1 - i]) {
+                return false;
+            }
+        }
+        return true;
     }
 };
 
 void preprocessString(const string& str, string& processed) {
-    for (char ch : str) {
+    for (int i = 0; i < str.length(); i++) {
+        char ch = str[i];
         if (isalnum(ch)) {
             processed += tolower(ch);
         }
@@ -42,8 +50,8 @@ int main() {
 
     preprocessString(str, processed);
 
-    for (char ch : processed) {
-        stk.push(ch);
+    for (int i = 0; i < processed.length(); i++) {
+        stk.push(processed[i]);
     }
 
     if (stk.checkPalindrome(processed)) {
