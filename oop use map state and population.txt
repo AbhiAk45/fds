@@ -1,0 +1,52 @@
+/*Write a program in C++ to use map associative container. 
+The keys will be the names of states and the values will be
+ the populations of the states. When the program runs, 
+ the user is prompted to type the name of a state.
+The program then looks in the map, using the state name as an index 
+and returns the population of the state.*/
+
+
+
+
+#include<iostream>
+#include<map>
+#include<string>
+using namespace std;
+int main()
+{
+typedef map<string,int> mapType;//key and value
+mapType populationMap; //create a empty map
+
+populationMap.insert(pair<string, int>("Maharashtra", 7026357));//collect the data
+populationMap.insert(pair<string, int>("Rajasthan", 6578936));
+populationMap.insert(pair<string, int>("Karanataka", 6678993));
+populationMap.insert(pair<string, int>("Punjab", 5789032));
+populationMap.insert(pair<string, int>("West Bengal", 6676291));
+
+//iterator/index for map
+
+mapType::iterator iter;//pointing to element of map
+
+//display the size of the map
+cout<<"========Population of states in India==========\n";
+cout<<"\n Size of populationMap"<<populationMap.size()<<"\n";//size of elements
+
+//find will return an iterator to the matching elements. it is found
+
+string state_name;
+cout<<"\n Enter name of the state :";
+cin>>state_name;//we can find the state help of iterator
+
+iter = populationMap.find(state_name);//find the record in map
+
+if( iter!= populationMap.end() )//found the state show the state
+ cout<<state_name<<" 's population is "
+ <<iter->second ;
+ 
+else
+
+cout<<"Key is not populationMap"<<"\n";
+populationMap.clear();
+}
+
+

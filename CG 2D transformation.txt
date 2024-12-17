@@ -1,0 +1,202 @@
+#include<iostream>
+#include<graphics.h>
+#include<math.h>
+using namespace std;
+
+class trans
+{
+	double transmat[3][3],xy[3],final_mat[3],x[4],y[4],x1[4],y1[4];
+	public:
+		void accept()
+		{
+			for(int i=0;i<3;i++)
+			{
+				cout<<"\nEnter coordinates : ";
+				cin>>x[i]>>y[i];
+			}
+			for(int i=0;i<2;i++)
+				line(getmaxx()/2+x[i],getmaxy()/2-y[i],getmaxx()/2+x[i+1],getmaxy()/2-y[i+1]);
+			line(getmaxx()/2+x[2],getmaxy()/2-y[2],getmaxx()/2+x[0],getmaxy()/2-y[0]);
+			
+		};
+		void operator!()
+		{
+			int tx,ty;
+			cout<<"\nEnter tx: ";
+			cin>>tx;
+			cout<<"\nEnter ty: ";
+			cin>>ty;
+			clearmatrix();
+			transmat[0][0]=1;transmat[1][1]=1;transmat[2][2]=1;
+			transmat[0][2]=tx;transmat[1][2]=ty;
+			for(int i=0;i<3;i++)
+			{
+				xy[0]=x[i];xy[1]=y[i];xy[2]=1;
+				mult(i);
+			}
+			setcolor(RED);
+			redraw();
+		};
+		void operator++()
+		{
+			int sx,sy;
+			cout<<"\nEnter sx: ";
+			cin>>sx;
+			cout<<"\nEnter sy: ";
+			cin>>sy;
+			clearmatrix();
+			transmat[0][0]=sx;transmat[1][1]=sy;transmat[2][2]=1;
+
+			for(int i=0;i<3;i++)
+			{
+				xy[0]=x[i];xy[1]=y[i];xy[2]=1;
+				mult(i);
+			}
+			setcolor(BLUE);
+			redraw();
+		};
+		void operator--()
+		{
+			double angle;
+			cout<<"\nEnter angle: ";
+			cin>>angle;
+			double radians=angle*M_PI/180;
+			clearmatrix();
+			transmat[0][0]=cos(radians);transmat[0][1]=-sin(radians);
+			transmat[1][0]=sin(radians);transmat[1][1]=cos(radians);
+			transmat[2][2]=1;
+			for(int i=0;i<3;i++)
+			{
+				xy[0]=x[i];xy[1]=y[i];xy[2]=1;
+				mult(i);
+			}
+			setcolor(GREEN);
+			
+			redraw();
+		};
+		void redraw()
+		{
+			for(int i=0;i<2;i++)
+				line(getmaxx()/2+x1[i],getmaxy()/2-y1[i],getmaxx()/2+x1[i+1],getmaxy()/2-y1[i+1]);
+			line(getmaxx()/2+x1[2],getmaxy()/2-y1[2],getmaxx()/2+x1[0],getmaxy()/2-y1[0]);
+		};
+		void clearmatrix()
+		{
+			for(int i=0;i<3;i++)
+				for(int j=0;j<3;j++)
+					transmat[i][j]=0;
+		};
+		void mult(int cnt)
+		{
+			for(int i=0;i<3;i++)
+			{
+				final_mat[i]=0;
+				for(int j=0;j<3;j++)
+					final_mat[i]+=transmat[i][j]*xy[j];
+			}
+			x1[cnt]=final_mat[0];y1[cnt]=final_mat[1];
+		};
+		
+}t;
+
+int main()
+{
+	int gd=DETECT,gm;
+	initgraph(&gd,&gm,NULL);
+	line(0,getmaxy()/2,getmaxx(),getmaxy()/2);
+	line(getmaxx()/2,0,getmaxx()/2,getmaxy());
+	t.accept();
+	int ch;
+	do
+	{
+		cout<<"\n1. Translation\n2. Scaling\n3. Rotate \n4. Exit";
+		cout<<"\nEnte your choice : ";
+		cin>>ch;
+		switch(ch)
+		{
+			case 1:	!t;
+				break;
+			case 2: ++t;
+				break;
+			case 3: --t;
+				break;
+			default: cout<<"Your choice is wrong.";
+		}
+	}while(ch<4);
+	delay(300000);
+	closegraph();
+	return 0;
+}
+
+
+
+
+/* Enter coordinates : 100 100
+
+Enter coordinates : 150
+100
+
+Enter coordinates : 100
+150
+
+1. Translation
+2. Scaling
+3. Rotate
+4. Exit
+Ente your choice : 1
+
+Enter tx: 50
+
+Enter ty: 60
+
+1. Translation
+2. Scaling
+3. Rotate
+4. Exit
+Ente your choice : 2
+
+Enter sx: 80
+
+Enter sy: 70
+
+1. Translation
+2. Scaling
+3. Rotate
+4. Exit
+Ente your choice : 3
+
+Enter angle: 45
+
+1. Translation
+2. Scaling
+3. Rotate
+4. Exit
+Ente your choice : 3
+
+Enter angle: 90
+
+1. Translation
+2. Scaling
+3. Rotate
+4. Exit
+Ente your choice : 1
+
+Enter tx: 100
+
+Enter ty: 200
+
+1. Translation
+2. Scaling
+3. Rotate
+4. Exit
+Ente your choice : 1
+
+Enter tx: 40
+
+Enter ty: 35
+
+1. Translation
+2. Scaling
+3. Rotate
+4. Exit
+Ente your choice : */

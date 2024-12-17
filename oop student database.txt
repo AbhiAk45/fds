@@ -1,0 +1,97 @@
+#include<iostream>
+#include<string>
+using namespace std;
+class student
+{
+	private:
+	string name,dob,blood_grp,addr,year_class,mob;
+	int div;
+	int *rno;
+	public:
+		   friend class faculty;
+		   student()// default constr
+		   {
+		   	rno=new int ;
+		   	*rno=div=-1;
+		   	
+		   	name=blood_grp=addr=year_class=mob=" ";
+		   }
+		   ~student ()
+		   {
+		   	delete rno;
+		   }
+		   void add_data()
+		   {
+		   	cout<<"\n Enter student information:";
+		   	cout<<"\n \n Enter student name:";
+		   	cin.ignore();//used to free buffer
+		   	getline(cin,name);
+		   	cout<<"\n Enter student roll no:";
+		   	cin>>*rno;
+		   	cout<<"\n Enter student year(SE/TE/BE):";
+		   	cin>>year_class;
+		   	cout<<"\n Enter student div(1/2/3/4):";
+		   	cin>>div;
+		   	cout<<"\n enter student DOB:";
+		   	cin>>dob;
+		   	cout<<"\n enter student Blood group:";
+		   	cin>>blood_grp;
+		   	cout<<"\n enter student mobile no:";
+		   	cin>>mob;
+		   	cout<<"\n enter student address:";
+		   	cin>>addr;
+		   	 	
+		   }
+		   void display()
+		   {
+		   	cout<<"\n -----------------------------";
+		   	cout<<"\n Name     :"<<name;
+		   	cout<<"\n Roll no  :"<<*rno;
+		   	cout<<"\n year     :"<<year_class;
+		   	cout<<"\n division :"<<div;
+		   	cout<<"\n Dob      :"<<dob;
+		   	cout<<"\n mobile   :"<<mob;
+		   	cout<<"\n address  :"<<addr;
+		   	cout<<"\n -----------------------------";
+		 	}
+		 	static void header()
+		 	{
+		 		cout<<"\n ********Student Information System*****";
+			}
+	};
+	
+	int main()
+	{
+		student st[5];//st is obj student class
+		
+		int ch=0;
+		int count=0;
+		do
+		{
+			//cout<<"\n ---student information system--------";
+			cout<<"\n \n---**Menu ***--------------------";
+			cout<<"\n 1.add info:";
+			cout<<"\n 2.Display info:";
+			cout<<"\n 3.Exit:";
+			cout<<"\n enter ur choice:";
+			cin>>ch;
+			switch(ch)
+			{
+				case 1:// add the info
+				st[count].add_data();
+				count++;
+				break;
+				case 2:// display infor
+				for(int j=0;j<count;j++)
+				{
+					student::header();//static func call
+					st[j].display();
+				}
+				break;
+				
+				case 3: exit(0);
+			}//end of switch statement
+			
+		}while(ch!=3);//end of do while
+		return 0;
+	}//end of main function
